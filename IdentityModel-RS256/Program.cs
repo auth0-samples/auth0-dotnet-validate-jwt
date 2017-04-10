@@ -20,6 +20,8 @@ namespace ConsoleApp
             try
             {
                 // Download the OIDC configuration which contains the JWKS
+                // NB!!: Downloading this takes time, so do not do it very time you need to validate a token, Try and do it only once in the lifetime
+                //     of your application!!
                 IConfigurationManager<OpenIdConnectConfiguration> configurationManager = new ConfigurationManager<OpenIdConnectConfiguration>($"{auth0Domain}.well-known/openid-configuration", new OpenIdConnectConfigurationRetriever());
                 OpenIdConnectConfiguration openIdConfig = AsyncHelper.RunSync(async () => await configurationManager.GetConfigurationAsync(CancellationToken.None));
 
